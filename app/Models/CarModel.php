@@ -25,6 +25,6 @@ class CarModel extends Model
      */
     public function generations(): HasMany
     {
-        return $this->hasMany(Generation::class);
+        return $this->hasMany(Generation::class, 'model_id');
     }
 }
