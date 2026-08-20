@@ -21,11 +21,17 @@ class Engine extends Model
         ];
     }
 
+    /**
+     * @return BelongsTo<Generation, $this>
+     */
     public function generation(): BelongsTo
     {
         return $this->belongsTo(Generation::class);
     }
 
+    /**
+     * @return HasMany<Car, $this>
+     */
     public function cars(): HasMany
     {
         return $this->hasMany(Car::class);

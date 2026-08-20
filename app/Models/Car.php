@@ -28,21 +28,33 @@ class Car extends Model
         ];
     }
 
+    /**
+     * @return BelongsTo<Generation, $this>
+     */
     public function generation(): BelongsTo
     {
         return $this->belongsTo(Generation::class);
     }
 
+    /**
+     * @return BelongsTo<Engine, $this>
+     */
     public function engine(): BelongsTo
     {
         return $this->belongsTo(Engine::class);
     }
 
+    /**
+     * @return HasMany<Image, $this>
+     */
     public function images(): HasMany
     {
         return $this->hasMany(Image::class);
     }
 
+    /**
+     * @return HasOne<AiAnalysis, $this>
+     */
     public function aiAnalysis(): HasOne
     {
         return $this->hasOne(AiAnalysis::class);

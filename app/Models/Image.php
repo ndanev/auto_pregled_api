@@ -16,6 +16,9 @@ class Image extends Model
         ];
     }
 
+    /**
+     * @return BelongsTo<Car, $this>
+     */
     public function car(): BelongsTo
     {
         return $this->belongsTo(Car::class);

@@ -9,6 +9,9 @@ class Brand extends Model
 {
     protected $fillable = ['name', 'slug', 'logo_path'];
 
+    /**
+     * @return HasMany<CarModel, $this>
+     */
     public function models(): HasMany
     {
         return $this->hasMany(CarModel::class);
