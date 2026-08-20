@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\Admin\AuthController;
 use App\Http\Controllers\Api\Admin\BrandController;
+use App\Http\Controllers\Api\Admin\CarModelController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')->group(function () {
@@ -12,5 +13,6 @@ Route::prefix('admin')->group(function () {
         Route::get('/me', [AuthController::class, 'me']);
 
         Route::apiResource('brands', BrandController::class);
+        Route::apiResource('models', CarModelController::class);
     });
 });
