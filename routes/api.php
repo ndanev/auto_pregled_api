@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\Admin\AuthController;
 use App\Http\Controllers\Api\Admin\BrandController;
+use App\Http\Controllers\Api\Admin\CarController;
 use App\Http\Controllers\Api\Admin\CarModelController;
 use App\Http\Controllers\Api\Admin\EngineController;
 use App\Http\Controllers\Api\Admin\GenerationController;
@@ -18,5 +19,6 @@ Route::prefix('admin')->group(function () {
         Route::apiResource('models', CarModelController::class);
         Route::apiResource('generations', GenerationController::class);
         Route::apiResource('engines', EngineController::class);
+        Route::apiResource('cars', CarController::class);
     });
 });

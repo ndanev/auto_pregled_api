@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Str;
 
 class Car extends Model
 {
@@ -58,5 +59,36 @@ class Car extends Model
     public function aiAnalysis(): HasOne
     {
         return $this->hasOne(AiAnalysis::class);
+    }
+
+    /**
+     * Generiše jedinstven slug na osnovu marke, modela, generacije, motora,
+     * menjača i (ako postoji) tipa karoserije — sa numeričkim sufiksom ako
+     * već postoji identičan slug (npr. isti auto sa različitim body_type).
+     */
+    public static function generateSlug(Generation $generation, Engine $engine, Transmission $transmission, ?BodyType $bodyType): string
+    {
+        $parts = [
+            $generation->model->brand->name,
+            $generation->model->name,
+            $generation->name,
+            $engine->name,
+            $transmission->value,
+        ];
+
+        if ($bodyType !== null) {
+            $parts[] = $bodyType->value;
+        }
+
+        $base = Str::slug(implode(' ', $parts));
+        $slug = $base;
+        $suffix = 2;
+
+        while (static::where('slug', $slug)->exists()) {
+            $slug = "{$base}-{$suffix}";
+            $suffix++;
+        }
+
+        return $slug;
     }
 }
