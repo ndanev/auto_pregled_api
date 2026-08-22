@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\Admin\CarController;
 use App\Http\Controllers\Api\Admin\CarModelController;
 use App\Http\Controllers\Api\Admin\EngineController;
 use App\Http\Controllers\Api\Admin\GenerationController;
+use App\Http\Controllers\Api\Admin\ImageController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')->group(function () {
@@ -14,6 +15,12 @@ Route::prefix('admin')->group(function () {
     Route::middleware('auth:admin')->group(function () {
         Route::post('/logout', [AuthController::class, 'logout']);
         Route::get('/me', [AuthController::class, 'me']);
+
+        Route::post('cars/{car}/images', [ImageController::class, 'store']);
+        Route::get('cars/{car}/images', [ImageController::class, 'index']);
+        Route::post('cars/{car}/images/reorder', [ImageController::class, 'reorder']);
+        Route::put('images/{image}', [ImageController::class, 'update']);
+        Route::delete('images/{image}', [ImageController::class, 'destroy']);
 
         Route::apiResource('brands', BrandController::class);
         Route::apiResource('models', CarModelController::class);
