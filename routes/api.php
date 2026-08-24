@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\Admin\AuthController;
 use App\Http\Controllers\Api\Admin\BrandController;
+use App\Http\Controllers\Api\Admin\CarAiAnalysisController;
 use App\Http\Controllers\Api\Admin\CarController;
 use App\Http\Controllers\Api\Admin\CarModelController;
 use App\Http\Controllers\Api\Admin\EngineController;
@@ -19,6 +20,8 @@ Route::prefix('admin')->group(function () {
         Route::post('cars/{car}/images', [ImageController::class, 'store']);
         Route::get('cars/{car}/images', [ImageController::class, 'index']);
         Route::post('cars/{car}/images/reorder', [ImageController::class, 'reorder']);
+        Route::post('cars/{car}/generate-analysis', [CarAiAnalysisController::class, 'generate']);
+
         Route::put('images/{image}', [ImageController::class, 'update']);
         Route::delete('images/{image}', [ImageController::class, 'destroy']);
 

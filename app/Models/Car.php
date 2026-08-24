@@ -12,6 +12,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Str;
 
+/**
+ * @property Transmission $transmission
+ * @property Drivetrain|null $drivetrain
+ * @property BodyType|null $body_type
+ */
 class Car extends Model
 {
     protected $fillable = [

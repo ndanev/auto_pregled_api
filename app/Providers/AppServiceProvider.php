@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Services\AI\AiAnalysisGeneratorInterface;
+use App\Services\AI\OpenAiAnalysisGenerator;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
@@ -15,7 +17,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->bind(AiAnalysisGeneratorInterface::class, OpenAiAnalysisGenerator::class);
     }
 
     /**
