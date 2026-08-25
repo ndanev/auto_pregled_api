@@ -15,15 +15,20 @@ class CarController extends Controller
     public function index(Request $request): AnonymousResourceCollection
     {
         $search = $request->string('q')->trim()->toString();
+        $words = $search !== '' ? array_filter(preg_split('/\s+/', $search) ?: []) : [];
 
         $cars = Car::query()
             ->where('status', CarStatus::Published)
             ->with(['generation.model.brand', 'engine', 'aiAnalysis', 'images'])
-            ->when($search !== '', function ($query) use ($search) {
-                $query->whereHas('generation.model.brand', fn ($q) => $q->where('name', 'like', "%{$search}%"))
-                    ->orWhereHas('generation.model', fn ($q) => $q->where('name', 'like', "%{$search}%"))
-                    ->orWhereHas('generation', fn ($q) => $q->where('name', 'like', "%{$search}%"))
-                    ->orWhereHas('engine', fn ($q) => $q->where('name', 'like', "%{$search}%"));
+            ->when(! empty($words), function ($query) use ($words) {
+                foreach ($words as $word) {
+                    $query->where(function ($subQuery) use ($word) {
+                        $subQuery->whereHas('generation.model.brand', fn ($q) => $q->where('name', 'like', "%{$word}%"))
+                            ->orWhereHas('generation.model', fn ($q) => $q->where('name', 'like', "%{$word}%"))
+                            ->orWhereHas('generation', fn ($q) => $q->where('name', 'like', "%{$word}%"))
+                            ->orWhereHas('engine', fn ($q) => $q->where('name', 'like', "%{$word}%"));
+                    });
+                }
             })
             ->latest()
             ->get();
