@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\Admin\CarModelController;
 use App\Http\Controllers\Api\Admin\EngineController;
 use App\Http\Controllers\Api\Admin\GenerationController;
 use App\Http\Controllers\Api\Admin\ImageController;
+use App\Http\Controllers\Public\CarController as PublicCarController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')->group(function () {
@@ -32,3 +33,6 @@ Route::prefix('admin')->group(function () {
         Route::apiResource('cars', CarController::class);
     });
 });
+
+Route::get('cars', [PublicCarController::class, 'index']);
+Route::get('cars/{slug}', [PublicCarController::class, 'show']);

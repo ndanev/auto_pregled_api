@@ -5,6 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @property float|null $overall_rating
+ * @property float|null $reliability_score
+ * @property bool $has_insufficient_data
+ */
 class AiAnalysis extends Model
 {
     protected $fillable = ['car_id', 'content'];
@@ -13,6 +18,9 @@ class AiAnalysis extends Model
     {
         return [
             'content' => 'array',
+            'overall_rating' => 'float',
+            'reliability_score' => 'float',
+            'has_insufficient_data' => 'boolean',
         ];
     }
 
