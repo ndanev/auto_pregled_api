@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\Admin\BrandController;
 use App\Http\Controllers\Api\Admin\CarAiAnalysisController;
 use App\Http\Controllers\Api\Admin\CarController;
 use App\Http\Controllers\Api\Admin\CarModelController;
+use App\Http\Controllers\Api\Admin\DashboardController;
 use App\Http\Controllers\Api\Admin\EngineController;
 use App\Http\Controllers\Api\Admin\GenerationController;
 use App\Http\Controllers\Api\Admin\ImageController;
@@ -17,6 +18,7 @@ Route::prefix('admin')->group(function () {
     Route::middleware('auth:admin')->group(function () {
         Route::post('/logout', [AuthController::class, 'logout']);
         Route::get('/me', [AuthController::class, 'me']);
+        Route::get('dashboard/stats', [DashboardController::class, 'stats']);
 
         Route::post('cars/{car}/images', [ImageController::class, 'store']);
         Route::get('cars/{car}/images', [ImageController::class, 'index']);
