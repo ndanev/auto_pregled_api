@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\Admin\AiUsageController;
 use App\Http\Controllers\Api\Admin\AuthController;
 use App\Http\Controllers\Api\Admin\BrandController;
 use App\Http\Controllers\Api\Admin\CarAiAnalysisController;
@@ -33,6 +34,8 @@ Route::prefix('admin')->group(function () {
         Route::apiResource('generations', GenerationController::class);
         Route::apiResource('engines', EngineController::class);
         Route::apiResource('cars', CarController::class);
+
+        Route::get('ai-usage/stats', [AiUsageController::class, 'stats']);
     });
 });
 

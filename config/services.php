@@ -38,6 +38,10 @@ return [
     'openai' => [
         'api_key' => env('OPENAI_API_KEY'),
         'model' => env('OPENAI_MODEL', 'gpt-5-nano'),
+        'pricing' => [
+            // cena po 1M tokena u USD — ažuriraj po potrebi sa platform.openai.com/pricing
+            'gpt-5-nano' => ['input' => 0.05, 'output' => 0.40],
+        ],
     ],
 
 ];
