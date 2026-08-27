@@ -16,10 +16,20 @@ class CarController extends Controller
     {
         $search = $request->string('q')->trim()->toString();
         $words = $search !== '' ? array_filter(preg_split('/\s+/', $search) ?: []) : [];
+        $brandSlug = $request->string('brand_slug')->toString();
+        $modelSlug = $request->string('model_slug')->toString();
 
         $cars = Car::query()
             ->where('status', CarStatus::Published)
             ->with(['generation.model.brand', 'engine', 'aiAnalysis', 'images'])
+            ->when($brandSlug !== '', fn ($query) => $query->whereHas(
+                'generation.model.brand',
+                fn ($q) => $q->where('slug', $brandSlug)
+            ))
+            ->when($modelSlug !== '', fn ($query) => $query->whereHas(
+                'generation.model',
+                fn ($q) => $q->where('slug', $modelSlug)
+            ))
             ->when(! empty($words), function ($query) use ($words) {
                 foreach ($words as $word) {
                     $query->where(function ($subQuery) use ($word) {

@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\Admin\DashboardController;
 use App\Http\Controllers\Api\Admin\EngineController;
 use App\Http\Controllers\Api\Admin\GenerationController;
 use App\Http\Controllers\Api\Admin\ImageController;
+use App\Http\Controllers\Public\BrandController as PublicBrandController;
 use App\Http\Controllers\Public\CarController as PublicCarController;
 use Illuminate\Support\Facades\Route;
 
@@ -41,3 +42,5 @@ Route::prefix('admin')->group(function () {
 
 Route::get('cars', [PublicCarController::class, 'index']);
 Route::get('cars/{slug}', [PublicCarController::class, 'show']);
+Route::get('brands', [PublicBrandController::class, 'index']);
+Route::get('brands/{slug}', [PublicBrandController::class, 'show']);
