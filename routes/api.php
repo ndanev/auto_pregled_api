@@ -37,6 +37,7 @@ Route::prefix('admin')->group(function () {
         Route::apiResource('cars', CarController::class);
 
         Route::get('ai-usage/stats', [AiUsageController::class, 'stats']);
+        Route::post('brands/{brand}/logo', [BrandController::class, 'updateLogo']);
     });
 });
 

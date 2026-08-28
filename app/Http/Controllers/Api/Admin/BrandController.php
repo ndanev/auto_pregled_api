@@ -4,11 +4,14 @@ namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreBrandRequest;
+use App\Http\Requests\Admin\UpdateBrandLogoRequest;
 use App\Http\Requests\Admin\UpdateBrandRequest;
 use App\Http\Resources\Admin\BrandResource;
 use App\Models\Brand;
+use App\Services\ImageUploadService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\Storage;
 
 class BrandController extends Controller
 {
@@ -55,5 +58,19 @@ class BrandController extends Controller
         $brand->delete();
 
         return response()->json(status: 204);
+    }
+
+    public function updateLogo(UpdateBrandLogoRequest $request, Brand $brand, ImageUploadService $uploadService): BrandResource
+    {
+        $this->authorize('update', $brand);
+
+        if ($brand->logo_path) {
+            Storage::disk('public')->delete($brand->logo_path);
+        }
+
+        $path = $uploadService->processBrandLogo($request->file('logo'), $brand->id);
+        $brand->update(['logo_path' => $path]);
+
+        return new BrandResource($brand);
     }
 }

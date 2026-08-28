@@ -58,4 +58,18 @@ class ImageUploadService
     {
         return preg_replace('/\.webp$/', '-thumb.webp', $path) ?? $path;
     }
+
+    public function processBrandLogo(UploadedFile $file, int $brandId): string
+    {
+        $manager = ImageManager::usingDriver(Driver::class);
+        $image = $manager->decodeSplFileInfo($file);
+        $image->scaleDown(width: 400);
+
+        $filename = Str::random(20);
+        $path = "brands/{$brandId}/{$filename}.webp";
+
+        Storage::disk('public')->put($path, (string) $image->encodeUsingFormat(Format::WEBP, quality: 90));
+
+        return $path;
+    }
 }
