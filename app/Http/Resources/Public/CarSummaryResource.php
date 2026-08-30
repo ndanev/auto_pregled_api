@@ -11,6 +11,7 @@ use App\Models\Image;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * @property int $id
@@ -48,6 +49,7 @@ class CarSummaryResource extends JsonResource
             'overall_rating' => $this->aiAnalysis?->overall_rating,
             'main_image_url' => $mainImage?->path ? asset('storage/'.$mainImage->path) : null,
             'main_thumbnail_url' => $mainImage?->path ? asset('storage/'.preg_replace('/\.webp$/', '-thumb.webp', $mainImage->path)) : null,
+            'brand_logo_url' => $this->generation->model->brand->logo_path ? Storage::disk('public')->url($this->generation->model->brand->logo_path) : null,
         ];
     }
 }
