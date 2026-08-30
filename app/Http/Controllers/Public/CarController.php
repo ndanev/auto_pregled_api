@@ -20,6 +20,7 @@ class CarController extends Controller
         $modelSlug = $request->string('model_slug')->toString();
         $bodyType = $request->string('body_type')->toString();
         $fuelType = $request->string('fuel_type')->toString();
+        $transmission = $request->string('transmission')->toString();
 
         $cars = Car::query()
             ->where('status', CarStatus::Published)
@@ -28,6 +29,7 @@ class CarController extends Controller
             ->when($modelSlug !== '', fn ($query) => $query->whereHas('generation.model', fn ($q) => $q->where('slug', $modelSlug)))
             ->when($bodyType !== '', fn ($query) => $query->where('body_type', $bodyType))
             ->when($fuelType !== '', fn ($query) => $query->whereHas('engine', fn ($q) => $q->where('fuel_type', $fuelType)))
+            ->when($transmission !== '', fn ($query) => $query->where('transmission', $transmission))
             ->when(! empty($words), function ($query) use ($words) {
                 foreach ($words as $word) {
                     $query->where(function ($subQuery) use ($word) {
