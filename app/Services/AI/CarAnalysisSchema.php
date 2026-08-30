@@ -146,11 +146,23 @@ class CarAnalysisSchema
                         'required' => ['title', 'description', 'keywords'],
                         'additionalProperties' => false,
                     ],
+                    'faq' => [
+                        'type' => 'array',
+                        'items' => [
+                            'type' => 'object',
+                            'properties' => [
+                                'question' => ['type' => 'string'],
+                                'answer' => ['type' => 'string'],
+                            ],
+                            'required' => ['question', 'answer'],
+                            'additionalProperties' => false,
+                        ],
+                    ],
                 ],
                 'required' => [
                     'data_quality', 'ai_summary', 'target_audience', 'strengths', 'weaknesses',
                     'reliability', 'maintenance', 'fuel_consumption', 'driving_experience',
-                    'buying_guide', 'alternatives', 'seo',
+                    'buying_guide', 'alternatives', 'seo', 'faq',
                 ],
                 'additionalProperties' => false,
             ],

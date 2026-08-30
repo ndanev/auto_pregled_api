@@ -112,6 +112,13 @@ class OpenAiAnalysisGenerator implements AiAnalysisGeneratorInterface
             "data_quality.insufficient_sections" i popuni to polje najboljom
             razumnom procenom uz jasnu naznaku da je procena, ne izmišljenu preciznu
             činjenicu. Razlikuj proverene činjenice od opštih iskustava i procena.
+
+            Za polje "faq" generiši 4-5 pitanja koja su specifična za TAČNO ovaj
+            motor i generaciju (npr. o poznatim kvarovima tog konkretnog agregata,
+            o iskustvima sa tim menjačem, o poređenju sa sličnim konkurentskim
+            motorom), a ne generička pitanja koja već pokrivaju druge sekcije
+            analize (potrošnja, pouzdanost uopšteno). Odgovori treba da budu
+            kratki i direktni, 2-3 rečenice.
             PROMPT;
     }
 
